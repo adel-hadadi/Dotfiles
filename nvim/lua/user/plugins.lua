@@ -152,7 +152,6 @@ use({
     end,
 })
 
-
 -- Automatically fix indentation when pasting code
 use({
     'sickill/vim-pasta',
@@ -209,11 +208,59 @@ use({
   end,
 })
 
+-- Git commands
+use({
+    'tpope/vim-fugitive',
+    requires = 'tpope/vim-rhubarb',
+})
+
+-- Floating terminal
+use({
+  'voldikss/vim-floaterm',
+  config = function()
+    vim.g.floaterm_width = 0.8
+    vim.g.floaterm_height = 0.8
+    vim.keymap.set('n', '<F1>', ':FloatermToggle<CR>')
+    vim.keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
+  end
+})
+
+-- Improved syntax highlighting
+use({
+  'nvim-treesitter/nvim-treesitter',
+  run = function()
+    require('nvim-treesitter.install').update({ with_sync = true })
+  end,
+  requires = {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+     'nvim-treesitter/nvim-treesitter-textobjects',
+  },
+  config = function()
+    require('user/plugins/treesitter')
+  end,
+})
+
+-- Language Server Protocol.
+use({
+  'neovim/nvim-lspconfig',
+  requires = {
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    -- 'b0o/schemastore.nvim',
+    -- 'jose-elias-alvarez/null-ls.nvim',
+    -- 'jayp0521/mason-null-ls.nvim',
+  },
+  config = function()
+    require('user/plugins/lspconfig')
+  end,
+})
+
+-- add some test texts
 -- Automatically set up your configuration after closing packer.nvim
 -- Put this at the end after all plugins
 -- if packer_bootstrap then
 --   require('packer').sync()
--- end
+-- start
 
 -- vim.cmd([[
 --   augroup packer_user_config
